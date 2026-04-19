@@ -1,0 +1,16 @@
+---
+const {title, description} = Astro.props;
+---
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="PicelBoi" />
+    <meta
+    name="description"
+    content={description != undefined ? description : "TomoTools is a collection of fan-made tools meant to complement the Tomodachi Life series of games."} />
+    <meta
+    property="og:description"
+    content={description != undefined ? description : "TomoTools is a collection of fan-made tools meant to complement the Tomodachi Life series of games."} />
+    <meta property="og:title" content="Mozilla Developer Network" />
+
+    <title>{title} - TomoTools</title>
+</head>

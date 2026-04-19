@@ -7,19 +7,19 @@ Please note that some aren't based on reverse engineering and rather my own meas
 
 ### Pitch
 
-Formula to convert hz to Tomodachi Life pitch value (0-50, 24.5hz to 588.0 hz (exponential!))
-$y=24.63041387*1.065517299^x$
-(x is Tomodachi Life pitch value (SHOULD BE ROUNDED TO NEAREST NUMBER), y is hertz)
+Formula to convert hz to Tomodachi Life pitch value (0-50, 24.5hz to 588.0 hz (exponential!))  
+$y=\log_{1.065517299} (x/24.63641387)$  
+(y is Tomodachi Life pitch value (SHOULD BE ROUNDED TO NEAREST NUMBER), x is hertz)
 
 ### Speed
 
-Formula to convert wpm (words per minute) to Tomodachi Life speeds value (0-50, 87.692 wpm to 162.857 wpm (exponential!))
-$y=92.17202483*1.01145341^x$
-(x is Tomodachi Life speed value (SHOULD BE ROUNDED TO NEAREST NUMBER), y is wpm)
+Formula to convert wpm (words per minute) to Tomodachi Life speeds value (0-50, 87.692 wpm to 162.857 wpm (exponential!))  
+$y=\log_{1.01145341} (x/12.17202483)$  
+(y is Tomodachi Life speed value (SHOULD BE ROUNDED TO NEAREST NUMBER), x is wpm)
 
 ### Delivery
 
-Formula to convert base pitch and the highest pitch to Tomodachi Life delivery value (0-25 (for each side), 100% to 300%(exponential!))
-$(a/b)=.0839466389x+.9331843382$
+Formula to convert base pitch and the highest pitch to Tomodachi Life delivery value (0-25 (for each side), 100% to 300% (linear!))  
+$y=\frac{(\frac{a}{b})-.9331843382}{.0839460389}$
 
-(x is Tomodachi Life delivery value (SHOULD BE ROUNDED TO NEAREST NUMBER), a is highest pitch, b is base pitch)
+(y is Tomodachi Life delivery value (SHOULD BE ROUNDED TO NEAREST NUMBER), a is highest pitch, b is base pitch)

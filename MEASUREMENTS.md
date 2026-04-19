@@ -73,6 +73,6 @@ Here are the exact mesasurements and what was used to take them.
 | ----------- | -------- | ------------ |
 | 0           | 13s      | 92.308 wpm   |
 | 12          | 11s      | 109.0909 wpm |
-| 25          | 10s      | 114 wpm      |
-| 38          | 9s       | 126.667 wpm  |
-| 50          | 7s       | 162.857 wpm  |
+| 25          | 10s      | 120 wpm      |
+| 38          | 9s       | 133.333 wpm  |
+| 50          | 7s       | 171.429 wpm  |

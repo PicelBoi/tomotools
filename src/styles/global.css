@@ -6,3 +6,35 @@ body {
   width: 100vw;
   max-width: 800px;
 }
+
+main {
+  display: block;
+  margin: auto;
+  width: 90%;
+  padding: 16px;
+  border: 4px lightgrey solid;
+  border-radius: 16px;
+  margin-top: 16px;
+}
+
+header {
+  background-image:
+    radial-gradient(rgb(229, 165, 10) 30%, transparent 30%),
+    radial-gradient(rgb(229, 165, 10) 30%, transparent 30%);
+  background-position:
+    0px 0px,
+    12px 12px;
+  background-size: 24px 24px;
+  background-color: rgb(246, 211, 45);
+  padding: 16px;
+  width: 100vw;
+}
+
+nav {
+  width: 100vw;
+  padding: 8px;
+  padding-left: 16px;
+  background-color: lightgrey;
+  background-color: #efefef;
+  font-weight: 700;
+}

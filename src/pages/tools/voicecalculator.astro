@@ -1,0 +1,136 @@
+---
+import Main from "../../layouts/Main.astro"
+---
+<script>
+    import {PitchDetector} from "pitchy"
+    var recording = false
+    var pitches = []
+    var startTime = 0.0
+    var endTime = 0.0
+    var htlorlth = false;
+
+    function updatePitch(analyserNode, detector, input, sampleRate) {
+        if (recording) {
+            analyserNode.getFloatTimeDomainData(input);
+            const [pitch] = detector.findPitch(input, sampleRate);
+
+            pitches.push(pitch)
+
+            setTimeout(
+                () => updatePitch(analyserNode, detector, input, sampleRate),
+                100,
+            );
+        }
+        
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const audioContext = new window.AudioContext();
+        const analyserNode = audioContext.createAnalyser();
+        var detector = null
+        var input = null
+        var sampleRate = audioContext.sampleRate
+
+        navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+            audioContext.createMediaStreamSource(stream).connect(analyserNode);
+            detector = PitchDetector.forFloat32Array(analyserNode.fftSize);
+            detector.minVolumeDecibels = -10;
+            input = new Float32Array(detector.inputLength);
+        });
+        const button = document.getElementById("tomotools-tools-voicecalculator-form-record")
+        document.getElementById("tomotools-tools-voicecalculator-form-htlorlth-htl")?.addEventListener("change", () => {
+            if (document.getElementById("tomotools-tools-voicecalculator-form-htlorlth-htl").checked) {
+                htlorlth = false;
+            }
+        })
+        document.getElementById("tomotools-tools-voicecalculator-form-htlorlth-lth")?.addEventListener("change", () => {
+            if (document.getElementById("tomotools-tools-voicecalculator-form-htlorlth-lth").checked) {
+                htlorlth = true;
+            }
+        })
+        button.addEventListener("click", async () => {
+            if (recording) {
+                recording = false
+                endTime = performance.now()
+                pitches = pitches.filter(function(val) {
+                    return val !== 0;
+                });
+                let filteredpitches = []
+                pitches.forEach((value) => {
+                    // This is to prevent pitch values that are way more higher than the rest when doing pitch detection. - PB
+                    if (value < 1000) {
+                        filteredpitches.push(value)
+                    }
+                })
+                let averagepitch = filteredpitches.reduce((a, b) => a + b) / pitches.length
+                let highestpitch = Math.max(...filteredpitches)
+                
+
+                let pitch = Math.min(Math.max(Math.round(Math.log(averagepitch/24.63641387) / Math.log(1.065517299)), 0),50)
+                let deliveryadder = Math.round(((highestpitch/averagepitch)-.9331843382)/.0839460389)
+                console.log(deliveryadder)
+                let delivery = Math.min(Math.max(25 + (htlorlth ? -(deliveryadder) : deliveryadder), 0),50)
+                let length = document.getElementById("tomotools-tools-voicecalculator-form-length").getAttribute("value")    
+   
+                let wpm = ((60000/(endTime-startTime))*length)
+
+                let speed = Math.min(Math.max(Math.round(Math.log(wpm/92.17202483) / Math.log(1.01145341)), 0),50)
+
+                document.getElementById("tomotools-tools-voicecalculator-results").style.display = "block"
+                document.getElementById("tomotools-tools-voicecalculator-results-speed").textContent = speed.toString()
+                document.getElementById("tomotools-tools-voicecalculator-results-pitch").textContent = pitch.toString()
+                document.getElementById("tomotools-tools-voicecalculator-results-delivery").textContent = delivery.toString()
+
+                button.textContent = "Start Recording"
+            } else {
+                await audioContext.resume()
+                recording = true
+                startTime = performance.now()
+                pitches = []
+                button.textContent = "Stop Recording"
+                updatePitch(analyserNode, detector, input, sampleRate)
+            }
+                
+        })
+    });
+</script>
+<Main title="Voice Calculator">
+    <h1>Voice Calculator</h1>
+    <p>This calculates values on Tomodachi Life: Living The Dream by audio clip - it uses the highest and average pitch, as well as duration and amount of words spoken to generate values based on such.</p>
+    <p>Want the code/formulas? Check out the <a href="https://github.com/PicelBoi/tomotools">GitHub repository</a>.</p>
+    <p>If you need an example, you can read this out:</p>
+    <ul>
+        <li>Example: My name is Morgan. It's nice to meet you. Today is April 18th, 2026. So, how does this voice sound?</li>
+        <li>Length: 20 words</li>
+    </ul>
+    <fieldset>
+        <legend>Insert these values below:</legend>
+        <label for="length">Number of words:</label>
+        <input type="number" name="length" id="tomotools-tools-voicecalculator-form-length" value="20">
+        <br>
+        <input type="radio" id="tomotools-tools-voicecalculator-form-htlorlth-htl" name="htlorlth" value="htl" checked />
+        <label for="htl">High-to-low</label>
+        <br>
+        <input type="radio" id="tomotools-tools-voicecalculator-form-htlorlth-lth" name="htlorlth" value="lth" />
+        <label for="lth">Low-to-high</label>
+        <br>
+        <button id="tomotools-tools-voicecalculator-form-record">Start Recording</button>
+        <br>
+    </fieldset>
+    <section id="tomotools-tools-voicecalculator-results" style="display:none">
+        <hr>
+        <ul>
+            <li>Speed: <span id="tomotools-tools-voicecalculator-results-speed"></span></li>
+            <li>Pitch: <span id="tomotools-tools-voicecalculator-results-pitch"></span></li>
+            <li>Delivery: <span id="tomotools-tools-voicecalculator-results-delivery"></span></li>
+        </ul>
+    </section>
+    <section>
+        <h2>So, what about Depth and Tone?</h2>
+        <p>Sadly I don't really know how to calculate these, so they're quite subjective. Here's how I choose them though</p>
+        <ul>
+            <li>Depth I like to do it depending on the Mii's voice's perceived gender - more to the left if it's more masculine, more to the right if it's more feminine. Of course, I wouldn't go for the extremes, and Depth isn't the only slider you should adjust just to make a voice sound more towards a gender.</li>
+            <li>Tone is just how you think the Mii speaks. 1 and 6 are the closest to how a typical human sounds, in my opinion. Just pick the best one for your Mii.</li>
+        </ul>
+    </section>
+</Main>

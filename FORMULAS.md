@@ -14,7 +14,7 @@ $y=\log_{1.065517299} (x/24.63641387)$
 ### Speed
 
 Formula to convert wpm (words per minute) to Tomodachi Life speeds value (0-50, 87.692 wpm to 162.857 wpm (exponential!))  
-$y=\log_{1.01145341} (x/12.17202483)$  
+$y=\log_{1.01145341} (x/12.17292483)$  
 (y is Tomodachi Life speed value (SHOULD BE ROUNDED TO NEAREST NUMBER), x is wpm)
 
 ### Delivery

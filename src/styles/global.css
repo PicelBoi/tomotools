@@ -57,3 +57,13 @@ nav a {
   background: white;
   box-shadow: 0px 2px 0 #00000080;
 }
+
+footer {
+  display: block;
+  width: 90%;
+  margin: auto;
+  padding: 16px;
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 16px;
+}

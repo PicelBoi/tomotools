@@ -3,7 +3,17 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Franklin Gothic Medium", Arial, sans-serif;
+}
+html {
   width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+    45deg,
+    #efefef,
+    #efefef 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  );
 }
 
 main {
@@ -15,6 +25,7 @@ main {
   border-radius: 16px;
   margin-top: 16px;
   max-width: 720px;
+  background-color: white;
 }
 
 header {

@@ -10,3 +10,7 @@ AI was not used in the development of this project.
 - Desmos
 - TI-84 Plus
 - Nintendo Switch
+- Astro.js
+- iPhone 13 mini
+- [Online Mic Test's Pitch Detector](https://www.onlinemictest.com/tuners/pitch-detector/)
+- [pitchy](https://www.npmjs.com/package/pitchy)

@@ -76,3 +76,19 @@ Here are the exact mesasurements and what was used to take them.
 | 25          | 10s      | 120 wpm      |
 | 38          | 9s       | 133.333 wpm  |
 | 50          | 7s       | 171.429 wpm  |
+
+### Delivery
+
+- Music and Sound volumes were set to 0
+- Each side of the delivery slider do the same, but left is low to high while right is high to low.
+- Each side is 25 values long.
+- Base pitch is 25 (120hz)
+- Delivery Variance Percent is calculated by $x/y$, with x being the Highest Hz Measurement and y being the base pitch.
+
+| Delivery Side Value | Highest Hz Measurement | Variance Percent |
+| ------------------- | ---------------------- | ---------------- |
+| 0                   | 120hz                  | 100%             |
+| 6                   | 150.3hz                | 125.25%          |
+| 12                  | 248.6hz                | 207.16%          |
+| 18                  | 295.5hz                | 246.25%          |
+| 25                  | 360.1hz                | 300.08%          |

@@ -1,18 +1,31 @@
 ---
-const {title, description} = Astro.props;
+const { title, description } = Astro.props;
 import { Font } from "astro:assets";
 ---
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="author" content="PicelBoi" />
-    <meta
+  <meta charset="utf-8" />
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="TomoTools" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="author" content="PicelBoi" />
+  <meta
     name="description"
-    content={description != undefined ? description : "TomoTools is a collection of fan-made tools meant to complement the Tomodachi Life series of games."} />
-    <meta
+    content={description != undefined
+      ? description
+      : "TomoTools is a collection of fan-made tools meant to complement the Tomodachi Life series of games."}
+  />
+  <meta
     property="og:description"
-    content={description != undefined ? description : "TomoTools is a collection of fan-made tools meant to complement the Tomodachi Life series of games."} />
-    <meta property="og:title" content="Mozilla Developer Network" />
-    <Font cssVariable="--font-fredoka" preload />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>{title} - TomoTools</title>
+    content={description != undefined
+      ? description
+      : "TomoTools is a collection of fan-made tools meant to complement the Tomodachi Life series of games."}
+  />
+  <meta property="og:title" content="Mozilla Developer Network" />
+  <Font cssVariable="--font-fredoka" preload />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} - TomoTools</title>
 </head>

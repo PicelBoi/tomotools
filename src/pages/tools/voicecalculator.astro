@@ -66,44 +66,46 @@ import Main from "../../layouts/Main.astro";
         pitches = pitches.filter(function (val) {
           return val !== 0;
         });
-        let filteredpitches = [];
-        pitches.forEach((value) => {
-          // This is to prevent pitch values that are way more higher than the rest when doing pitch detection. - PB
-          if (value < 1000) {
-            filteredpitches.push(value);
-          }
-        });
-        let averagepitch =
-          filteredpitches.reduce((a, b) => a + b) / pitches.length;
-        let highestpitch = Math.max(...filteredpitches);
+        if (pitches.length != 0) {
+          let filteredpitches = [];
+          pitches.forEach((value) => {
+            // This is to prevent pitch values that are way more higher than the rest when doing pitch detection. - PB
+            if (value < 1000) {
+              filteredpitches.push(value);
+            }
+          });
+          let averagepitch =
+            filteredpitches.reduce((a, b) => a + b) / pitches.length;
+          let highestpitch = Math.max(...filteredpitches);
 
-        let pitch = Math.min(
-          Math.max(
-            Math.round(
-              Math.log(averagepitch / 24.63641387) / Math.log(1.065517299),
+          let pitch = Math.min(
+            Math.max(
+              Math.round(
+                Math.log(averagepitch / 24.63641387) / Math.log(1.065517299),
+              ),
+              0,
             ),
-            0,
-          ),
-          50,
-        );
-        let deliveryadder = Math.round(
-          (highestpitch / averagepitch - 0.9331843382) / 0.0839460389,
-        );
-        console.log(deliveryadder);
-        let delivery = Math.min(
-          Math.max(25 + (htlorlth ? -deliveryadder : deliveryadder), 0),
-          50,
-        );
+            50,
+          );
+          let deliveryadder = Math.round(
+            (highestpitch / averagepitch - 0.9331843382) / 0.0839460389,
+          );
+          console.log(deliveryadder);
+          let delivery = Math.min(
+            Math.max(25 + (htlorlth ? -deliveryadder : deliveryadder), 0),
+            50,
+          );
 
-        document.getElementById(
-          "tomotools-tools-voicecalculator-results",
-        ).style.display = "block";
-        document.getElementById(
-          "tomotools-tools-voicecalculator-results-pitch",
-        ).textContent = pitch.toString();
-        document.getElementById(
-          "tomotools-tools-voicecalculator-results-delivery",
-        ).textContent = delivery.toString();
+          document.getElementById(
+            "tomotools-tools-voicecalculator-results",
+          ).style.display = "block";
+          document.getElementById(
+            "tomotools-tools-voicecalculator-results-pitch",
+          ).textContent = pitch.toString();
+          document.getElementById(
+            "tomotools-tools-voicecalculator-results-delivery",
+          ).textContent = delivery.toString();
+        }
 
         button.textContent = "Start Recording";
       } else {

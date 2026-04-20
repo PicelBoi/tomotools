@@ -6,8 +6,6 @@ import Main from "../../layouts/Main.astro";
   import { PitchDetector } from "pitchy";
   var recording = false;
   var pitches = [];
-  var startTime = 0.0;
-  var endTime = 0.0;
   var htlorlth = false;
 
   function updatePitch(analyserNode, detector, input, sampleRate) {
@@ -65,7 +63,6 @@ import Main from "../../layouts/Main.astro";
     button.addEventListener("click", async () => {
       if (recording) {
         recording = false;
-        endTime = performance.now();
         pitches = pitches.filter(function (val) {
           return val !== 0;
         });
@@ -97,26 +94,10 @@ import Main from "../../layouts/Main.astro";
           Math.max(25 + (htlorlth ? -deliveryadder : deliveryadder), 0),
           50,
         );
-        let length = document
-          .getElementById("tomotools-tools-voicecalculator-form-length")
-          .getAttribute("value");
-
-        let wpm = (60000 / (endTime - startTime)) * length;
-
-        let speed = Math.min(
-          Math.max(
-            Math.round(Math.log(wpm / 92.17202483) / Math.log(1.01145341)),
-            0,
-          ),
-          50,
-        );
 
         document.getElementById(
           "tomotools-tools-voicecalculator-results",
         ).style.display = "block";
-        document.getElementById(
-          "tomotools-tools-voicecalculator-results-speed",
-        ).textContent = speed.toString();
         document.getElementById(
           "tomotools-tools-voicecalculator-results-pitch",
         ).textContent = pitch.toString();
@@ -128,7 +109,6 @@ import Main from "../../layouts/Main.astro";
       } else {
         await audioContext.resume();
         recording = true;
-        startTime = performance.now();
         pitches = [];
         button.textContent = "Stop Recording";
         updatePitch(analyserNode, detector, input, sampleRate);
@@ -144,8 +124,7 @@ import Main from "../../layouts/Main.astro";
   <p><em><strong>(MAKE SURE TO ALLOW MICROPHONE USAGE!)</strong></em></p>
   <p>
     This calculates voice values for Tomodachi Life: Living The Dream by using a
-    audio recording - it uses the highest and average pitch, as well as duration
-    and amount of words spoken to generate values based on such.
+    audio recording - it uses the highest and average pitch to generate values based on such.
   </p>
   <p>
     Want the code/formulas? Check out the <a
@@ -196,9 +175,6 @@ import Main from "../../layouts/Main.astro";
     <hr />
     <ul>
       <li>
-        Speed: <span id="tomotools-tools-voicecalculator-results-speed"></span>
-      </li>
-      <li>
         Pitch: <span id="tomotools-tools-voicecalculator-results-pitch"></span>
       </li>
       <li>
@@ -214,6 +190,9 @@ import Main from "../../layouts/Main.astro";
       subjective. Here's how I choose them though
     </p>
     <ul>
+    <li>
+        Speed is relative since the Miis talk as a possibly lower speed than most people, so set it accordingly to how fast the person speaks.
+      </li>
       <li>
         Depth I like to do it depending on the Mii's voice's perceived gender -
         more to the left if it's more masculine, more to the right if it's more
